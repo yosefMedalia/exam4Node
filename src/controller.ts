@@ -1,14 +1,18 @@
+// controllers/beeperController.ts
 import { Request, Response } from 'express';
-import { getAllBeepers, findBeeperById, createBeeper, updateBeeperStatus, deleteBeeper } from './dal';
 import { v4 as uuidv4 } from 'uuid';
+import { createBeeper, getAllBeepers, findBeeperById,  deleteBeeper } from './dal';
+// updateBeeperStatus,
+//לטפל בפונקציה של עדכון
+import { Beeper } from '../models/beeper';
 
 // יצירת ביפר חדש
 export const createNewBeeper = (req: Request, res: Response) => {
-    const newBeeper = {
+    const newBeeper: Beeper = {
         id: uuidv4(),
         name: req.body.name,
         status: 'manufactured',
-        createdAt: new Date().toISOString(),
+        created_at: new Date(),
     };
     createBeeper(newBeeper);
     res.status(201).json(newBeeper);
@@ -31,12 +35,17 @@ export const getBeeperById = (req: Request, res: Response) => {
 };
 
 // עדכון סטטוס של ביפר
-export const updateBeeper = (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { status } = req.body;
-    updateBeeperStatus(id, status);
-    res.status(200).json({ message: 'Beeper status updated' });
-};
+// export const updateBeeper = (req: Request, res: Response) => {
+//     const { id } = req.params;
+//     const { status, latitude, longitude } = req.body;
+
+//     if (status === 'deployed' && (!latitude || !longitude)) {
+//         return res.status(400).json({ message: 'Latitude and Longitude are required for deployment.' });
+//     }
+
+//     updateBeeperStatus(id, status, latitude, longitude);
+//     res.status(200).json({ message: 'Beeper status updated' });
+// };
 
 // מחיקת ביפר
 export const deleteBeeperById = (req: Request, res: Response) => {

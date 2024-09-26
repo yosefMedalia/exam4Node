@@ -1,12 +1,12 @@
+// server.ts
 import express from 'express';
-import rout from './rout';
+import beeperRoutes from './routes/beeperRoutes';
 
 const app = express();
 app.use(express.json());
 
-app.use('/api', rout);
+app.use('/api', beeperRoutes);
 
-// הפעלת השרת
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
